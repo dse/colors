@@ -117,10 +117,6 @@ sub SETBGRGB { my ($r, $g, $b) = @_; return sprintf("${CSI}48:2:0:%d:%d:%dm", $r
 sub SETFGINDEX { my ($index) = @_; return sprintf("${CSI}38:5:%d", $index); }
 sub SETBGINDEX { my ($index) = @_; return sprintf("${CSI}48:5:%d", $index); }
 
-print("${CSI}#3${ST}Double-height line\n");
-print("${CSI}#4${ST}Double-height line\n");
-print("${CSI}#6${ST}Double-width line\n");
-
 print("normal ");
 print("${BOLD}bold${RESET} ");
 print("${FAINT}faint${RESET} ");
@@ -142,25 +138,30 @@ foreach my $bold (0, 1) {
         @fg = (30 .. 37, 39);
     }
     foreach my $fg (@fg) {
-        my $line = '';
-        my $color = $colors[$fg - 30] // '   ';
-        if ($bold) {
-            $line .= sprintf("1;%-2d ", $fg);
-        } else {
-            $line .= sprintf("  %-2d ", $fg);
-        }
-        $line .= "$color ";
-        foreach my $bg (40 .. 47, 49, 100 .. 107) {
-            my $bgfg;
-            if ($bold) {
-                $bgfg = "${CSI}1;${bg};${fg}m";
-            } else {
-                $bgfg = "${CSI}${bg};${fg}m";
-            }
-            $line .= sprintf("${bgfg}%3d${RESET} ", $bg);
-        }
-        print($line, "\n");
+        print_line_1($fg, $bold);
     }
+}
+
+sub print_line_1 {
+    my ($fg, $bold) = @_;
+    my $line = '';
+    my $color = $colors[$fg - 30] // '   ';
+    if ($bold) {
+        $line .= sprintf("1;%-2d ", $fg);
+    } else {
+        $line .= sprintf("  %-2d ", $fg);
+    }
+    $line .= "$color ";
+    foreach my $bg (40 .. 47, 49, 100 .. 107) {
+        my $bgfg;
+        if ($bold) {
+            $bgfg = "${CSI}1;${bg};${fg}m";
+        } else {
+            $bgfg = "${CSI}${bg};${fg}m";
+        }
+        $line .= sprintf("${bgfg}%3d${RESET} ", $bg);
+    }
+    print($line, "\n");
 }
 
 print("         BLACK   RED     GREEN   BRN/YEL BLUE    MAGENTA CYAN    WHITE\n");
