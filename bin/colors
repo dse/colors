@@ -128,8 +128,9 @@ print("${CROSSED}crossed${RESET} ");
 print("${DOUBLEUNDERLINE}double underline${RESET}\n");
 
 our @colors = qw(BLK RED GRN BRN BLU MGN CYN WHT);
+our @colors2 = qw(BLK RED GRN YEL BLU MGN CYN WHT);
 
-print("         @colors     @colors\n");
+print("         @colors     @colors2\n");
 foreach my $bold (0, 1) {
     my @fg;
     if ($bold) {
@@ -164,26 +165,55 @@ sub print_line_1 {
     print($line, "\n");
 }
 
-print("         BLACK   RED     GREEN   BRN/YEL BLUE    MAGENTA CYAN    WHITE\n");
-print("         ------- ------- ------- ------- ------- ------- ------- -------\n");
+print("           BLK     RED     GRN   BRN/YEL   BLU     MGN     CYN     WHT\n");
 print(" regular");
 foreach my $bg (40..47) {
-    printf(" ${CSI}${bg}m  %3d  ${RESET}", $bg);
-}
-print("\n");
-print("        ");
-foreach my $bg (40..47) {
-    print(" ${CSI}${bg}m       ${RESET}");
+    printf(" ${CSI}${bg}m    %3d${RESET}", $bg);
 }
 print("\n");
 
 print("    bold");
 foreach my $bg (100..107) {
-    printf(" ${CSI}1;${bg}m  %3d  ${RESET}", $bg);
+    printf(" ${CSI}1;${bg}m    %3d${RESET}", $bg);
 }
 print("\n");
-print("        ");
-foreach my $bg (100..107) {
-    print(" ${CSI}${bg}m       ${RESET}");
+
+print("88?   ");
+for (my $i = 16; $i < 88; $i += 1) {
+    print("${CSI}38:5:${i}mx");
 }
-print("\n");
+print("${CSI}m\n");
+
+print("256?  ");
+for (my $i = 88; $i < 232; $i += 1) {
+    if ($i == 160) {
+        print("${CSI}m\n      ");
+    }
+    print("${CSI}38:5:${i}mx");
+}
+print("${CSI}m\n      ");
+for (my $j = 0; $j < 3; $j += 1) {
+    for (my $i = 232; $i < 256; $i += 1) {
+        print("${CSI}38:5:${i}mx");
+    }
+}
+print("${CSI}m\n");
+
+use POSIX qw(round);
+
+print("rgb?  ");
+for (my $i = 0; $i < 72; $i += 1) {
+    my $c = round($i * 255 / 72);
+    print("${CSI}38:2:0:${c}:0:0mx");
+}
+print("${CSI}m\n      ");
+for (my $i = 0; $i < 72; $i += 1) {
+    my $c = round($i * 255 / 72);
+    print("${CSI}38:2:0:0:${c}:0mx");
+}
+print("${CSI}m\n      ");
+for (my $i = 0; $i < 72; $i += 1) {
+    my $c = round($i * 255 / 72);
+    print("${CSI}38:2:0:0:0:${c}mx");
+}
+print("${CSI}m\n");
