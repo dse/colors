@@ -112,10 +112,10 @@ our $CURSORSTEADYUNDERLINE = "${CSI}4${SP}q";
 our $CURSORBLINKBAR = "${CSI}5${SP}q";
 our $CURSORSTEADYBAR = "${CSI}6${SP}q";
 
-sub SETFGRGB { my ($r, $g, $b) = @_; return sprintf("${CSI}38:2:0:%d:%d:%dm", $r, $g, $b); }
-sub SETBGRGB { my ($r, $g, $b) = @_; return sprintf("${CSI}48:2:0:%d:%d:%dm", $r, $g, $b); }
-sub SETFGINDEX { my ($index) = @_; return sprintf("${CSI}38:5:%d", $index); }
-sub SETBGINDEX { my ($index) = @_; return sprintf("${CSI}48:5:%d", $index); }
+sub SETFGRGB { my ($r, $g, $b) = @_; return sprintf("${CSI}38;2;0;%d;%d;%dm", $r, $g, $b); }
+sub SETBGRGB { my ($r, $g, $b) = @_; return sprintf("${CSI}48;2;0;%d;%d;%dm", $r, $g, $b); }
+sub SETFGINDEX { my ($index) = @_; return sprintf("${CSI}38;5;%d", $index); }
+sub SETBGINDEX { my ($index) = @_; return sprintf("${CSI}48;5;%d", $index); }
 
 print("normal ");
 print("${BOLD}bold${RESET} ");
@@ -180,7 +180,7 @@ print("\n");
 
 print("88?   ");
 for (my $i = 16; $i < 88; $i += 1) {
-    print("${CSI}38:5:${i}mx");
+    print("${CSI}38;5;${i}mx");
 }
 print("${CSI}m\n");
 
@@ -189,12 +189,12 @@ for (my $i = 88; $i < 232; $i += 1) {
     if ($i == 160) {
         print("${CSI}m\n      ");
     }
-    print("${CSI}38:5:${i}mx");
+    print("${CSI}38;5;${i}mx");
 }
 print("${CSI}m\n      ");
 for (my $j = 0; $j < 3; $j += 1) {
     for (my $i = 232; $i < 256; $i += 1) {
-        print("${CSI}38:5:${i}mx");
+        print("${CSI}38;5;${i}mx");
     }
 }
 print("${CSI}m\n");
@@ -204,16 +204,16 @@ use POSIX qw(round);
 print("rgb?  ");
 for (my $i = 0; $i < 72; $i += 1) {
     my $c = round($i * 255 / 72);
-    print("${CSI}38:2:0:${c}:0:0mx");
+    print("${CSI}38;2;0;${c};0;0mx");
 }
 print("${CSI}m\n      ");
 for (my $i = 0; $i < 72; $i += 1) {
     my $c = round($i * 255 / 72);
-    print("${CSI}38:2:0:0:${c}:0mx");
+    print("${CSI}38;2;0;0;${c};0mx");
 }
 print("${CSI}m\n      ");
 for (my $i = 0; $i < 72; $i += 1) {
     my $c = round($i * 255 / 72);
-    print("${CSI}38:2:0:0:0:${c}mx");
+    print("${CSI}38;2;0;0;0;${c}mx");
 }
 print("${CSI}m\n");
