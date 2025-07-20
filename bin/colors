@@ -122,11 +122,11 @@ print("normal ");
 print("${BOLD}bold${RESET} ");
 print("${FAINT}faint${RESET} ");
 print("${ITALIC}italic${RESET} ");
-print("${UNDERLINE}underline${RESET} ");
+print("${UNDERLINE}under_line${RESET} ");
 print("${BLINK}blink${RESET} ");
 print("${INVERSE}inverse${RESET} ");
 print("${CROSSED}crossed${RESET} ");
-print("${DOUBLEUNDERLINE}double underline${RESET}\n");
+print("${DOUBLEUNDERLINE}double_under_line${RESET}\n");
 
 our @colors = qw(BLK RED GRN BRN BLU MGN CYN WHT);
 our @colors2 = qw(BLK RED GRN YEL BLU MGN CYN WHT);
